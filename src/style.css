@@ -1,0 +1,35 @@
+body {
+    color: #1C352D;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    background-color: var(--color-base-bg, #F1F3E0); /* Default */
+    transition: background-color 1s ease-in-out;
+}
+.main-title {
+    font-family: 'Lora', serif;
+}
+.weather-gif-container {
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
+    /* Reverted: Removed flex properties */
+}
+.weather-gif {
+    width: 100%;
+    height: 100%;
+    /* Reverted: Changed back to 'cover' to fill container (potentially cropping) */
+    object-fit: cover; 
+    border-radius: 0.75rem;
+}
+/* Dynamic Background Classes */
+.bg-clear { background-color: #F1F3E0; }
+.bg-rain { background-color: #D2DCB6; }
+.bg-clouds { background-color: #A1BC98; }
+.bg-snow { background-color: #F1F3E0; }
+.bg-thunderstorm { background-color: #778873; }
+.bg-mist { background-color: #D2DCB6; }
+
+/* Badge Colors (Simulated Risk Levels) */
+.badge-safe { background-color: #A1BC98; color: #778873; }
+.badge-moderate { background-color: #FCD34D; color: #778873; } /* Tailwind yellow-300 */
+.badge-high { background-color: #F87171; color: #FFFFFF; } /* Tailwind red-400 */

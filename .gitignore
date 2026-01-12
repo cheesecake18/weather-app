@@ -1,0 +1,17 @@
+node_modules/
+.env
+
+# OS and editor junk
+Thumbs.db
+.DS_Store
+
+# Ignore local Windows/AppData cache noise (AquaClip paths seen during git add)
+AppData/
+**/AppData/
+AquaClip/
+**/AquaClip/
+
+# Ignore local caches and temporary folders
+.cache/
+tmp/
+temp/

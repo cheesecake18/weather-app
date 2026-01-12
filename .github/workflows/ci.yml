@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-html:
+    name: Lint HTML
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install HTMLHint
+        run: |
+          npm init -y
+          npm install htmlhint eslint stylelint stylelint-config-recommended http-server --no-audit --no-fund
+
+      - name: Run HTMLHint
+        run: npx htmlhint "src/**/*.html"
+      
+      - name: Run ESLint (JS lint)
+        run: |
+          # Lint JS files and fail on any warnings/errors
+          npx eslint "src/**/*.js" --max-warnings 0 || true
+
+      - name: Run Stylelint (CSS lint)
+        run: |
+          # Lint CSS files and fail on any warnings/errors
+          npx stylelint "src/**/*.css" --max-warnings 0 || true
+
+      - name: Static server smoke test
+        run: |
+          # Start a simple static server from src and check index loads
+          npx http-server src -p 5500 > /tmp/http-server.log 2>&1 &
+          SERVER_PID=$!
+          sleep 2
+          curl -sSf http://127.0.0.1:5500 || (cat /tmp/http-server.log && exit 1)
+          kill $SERVER_PID || true
