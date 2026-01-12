@@ -1,12 +1,33 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "weather_app";
+class Database {
+    private $servername = "localhost";
+    private $username = "root";
+    private $password = "";
+    private $dbname = "weather_app";
+    private $conn;
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+    public function __construct() {
+        $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+        if ($this->conn->connect_error) {
+            die("Connection failed: " . $this->conn->connect_error);
+        }
+    }
+
+    public function getConnection() {
+        return $this->conn;
+    }
+
+    public function close() {
+        $this->conn->close();
+    }
+
+    public function query($sql) {
+        return $this->conn->query($sql);
+    }
+
+    public function real_escape_string($string) {
+        return $this->conn->real_escape_string($string);
+    }
 }
 ?>
